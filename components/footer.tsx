@@ -9,7 +9,7 @@ export function Footer() {
             <p className="text-gray-500">
               Powered by{" "}
               <a
-                href="https://dub.sh/together-ai"
+                href="https://togetherai.link/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-gray-500 hover:text-gray-900 transition-colors  underline-offset-4 underline"
