@@ -7,6 +7,11 @@ const nextConfig = {
         hostname: "napkinsdev.s3.us-east-1.amazonaws.com",
         pathname: "/next-s3-uploads/**",
       },
+      {
+        protocol: "https",
+        hostname: "togetherai-ix.s3.us-east-1.amazonaws.com",
+        pathname: "/next-s3-uploads/**",
+      },
     ],
   },
 };

@@ -26,6 +26,8 @@ export default function Home() {
   >("initial");
   const [parsedMenu, setParsedMenu] = useState<MenuItem[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState<string>("fine-dining");
+  const [selectedModel, setSelectedModel] = useState<string>("flux-1.1-pro");
 
   const handleFileChange = async (file: File) => {
     const objectUrl = URL.createObjectURL(file);
@@ -39,14 +41,31 @@ export default function Home() {
       method: "POST",
       body: JSON.stringify({
         menuUrl: url,
+        category: selectedCategory,
+        model: selectedModel,
       }),
     });
+    
+    if (!res.ok) {
+      console.error("API error:", res.status, res.statusText);
+      setStatus("initial");
+      alert("Failed to process menu image. Please try again.");
+      return;
+    }
+    
     const json = await res.json();
 
     console.log({ json });
 
+    if (json.error) {
+      console.error("Processing error:", json.error);
+      setStatus("initial");
+      alert("Failed to process menu image. Please try again.");
+      return;
+    }
+
     setStatus("created");
-    setParsedMenu(json.menu);
+    setParsedMenu(json.menu || []);
   };
 
   const handleSampleImage = async () => {
@@ -91,6 +110,43 @@ export default function Home() {
       <div className="max-w-2xl mx-auto">
         {status === "initial" && (
           <>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Food Category
+                </label>
+                <select
+                  value={selectedCategory}
+                  onChange={(e) => setSelectedCategory(e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                >
+                  <option value="fine-dining">Fine Dining</option>
+                  <option value="fast-food">Fast Food</option>
+                  <option value="to-go">To-Go / Takeout</option>
+                  <option value="home-style">Home Style</option>
+                </select>
+                <p className="mt-1 text-sm text-gray-500">
+                  Choose the style that best matches your menu
+                </p>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  AI Model
+                </label>
+                <select
+                  value={selectedModel}
+                  onChange={(e) => setSelectedModel(e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                >
+                  <option value="flux-1.1-pro">FLUX 1.1 Pro (Default)</option>
+                  <option value="krea-dev">FLUX Krea Dev</option>
+                  <option value="kontext-pro">FLUX Kontext Pro</option>
+                </select>
+                <p className="mt-1 text-sm text-gray-500">
+                  Select the image generation model
+                </p>
+              </div>
+            </div>
             <Dropzone
               accept={{
                 "image/*": [".jpg", ".jpeg", ".png"],
