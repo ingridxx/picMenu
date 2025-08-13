@@ -27,7 +27,9 @@ const CATEGORY_PROMPTS = {
 const AVAILABLE_MODELS = {
   "flux-1.1-pro": "black-forest-labs/FLUX.1.1-pro",
   "krea-dev": "black-forest-labs/FLUX.1-krea-dev", 
-  "kontext-pro": "black-forest-labs/FLUX.1-kontext-pro"
+  "kontext-pro": "black-forest-labs/FLUX.1-kontext-pro",
+  "kontext-max": "black-forest-labs/FLUX.1-kontext-max",
+  "kontext-dev": "black-forest-labs/FLUX.1-kontext-dev"
 } as const;
 
 type FoodCategory = keyof typeof CATEGORY_PROMPTS;

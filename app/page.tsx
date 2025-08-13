@@ -141,6 +141,8 @@ export default function Home() {
                   <option value="flux-1.1-pro">FLUX 1.1 Pro (Default)</option>
                   <option value="krea-dev">FLUX Krea Dev</option>
                   <option value="kontext-pro">FLUX Kontext Pro</option>
+                   <option value="kontext-max">FLUX Kontext Max</option>
+                   <option value="kontext-dev">FLUX Kontext Dev</option>
                 </select>
                 <p className="mt-1 text-sm text-gray-500">
                   Select the image generation model
